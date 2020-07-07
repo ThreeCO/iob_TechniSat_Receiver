@@ -19,7 +19,6 @@ const ts_keepAliveRequest          = '<keepAliveRequest/>';
 const ts_keepAliveResponse         = '<keepAliveResponse/>';
 
 //        0.Command Name                       1.Path              2. curl Command
-//pCommands['Cmd: Ambilight Hue On'] = ['menuitems/settings/update',   '{"values":[{"value":{"Nodeid":2131230774,"Controllable":"true","Available":"true","data":{"value":"true"}}}]}'];
 var inc = 0;
 pCommands['Button: 0']          = [inc++]; // 0
 pCommands['Button: 1']          = [inc++]; // 1
