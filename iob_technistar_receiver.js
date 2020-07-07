@@ -2,7 +2,7 @@
 ///////////////////////////////////////////////////////
 const tsHOST   ="";
 const tsPORT   =8090;
-const tsPIN    =;
+const tsPIN    =0000;
 const net = require("dgram").createSocket("udp4");
 
 ///////////////////////////////////////////////////////
