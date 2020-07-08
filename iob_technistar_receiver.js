@@ -1,7 +1,7 @@
 //// CONFIGURATION 
 ///////////////////////////////////////////////////////
 const STATE_PATH = "javascript.0.TechniStar.";
-const tsHOST="0.0.0.0";
+const tsHOST="127.0.0.1";
 const tsPORT=8090;
 const tsPIN=0000;
 const net = require("dgram").createSocket("udp4");
@@ -11,6 +11,7 @@ const tsLOG = true;  // true or false
 //// FUNCTIONALITY - DO NOT CHANGE BELOW THIS LINE ////
 ///////////////////////////////////////////////////////
 let remoteMessage = "";
+let tsAUTH = "ERROR";
 
 // XML-Strings ...
 const ts_deviceDiscoveryRequest    = '<deviceDiscoveryRequest/>';
@@ -18,7 +19,7 @@ const ts_deviceInformationRequest  = '<deviceInformationRequest/>';
 const ts_keepAliveRequest          = '<keepAliveRequest/>';
 const ts_keepAliveResponse         = '<keepAliveResponse/>';
 
-//        0.Command Name                       1.Path              2. curl Command
+let pCommands = [];
 var inc = 0;
 pCommands['Button: 0']          = [inc++]; // 0
 pCommands['Button: 1']          = [inc++]; // 1
@@ -147,13 +148,15 @@ function init() {
     createState(STATE_PATH + 'Command', undefined, true, {'name':'Send Command to Receiver', 'type':'string', 'read':false, 'write':true, 'role':'value', 'states': dropdownJSON}, () => !--createCount && callback && callback());
 
     createCount++;
-    createState(STATE_PATH + 'On',  {'name':'Turn Receiver On',  'type':'boolean', 'read':false, 'write':true, 'role':'button', 'def':false }, () => !--createCount && callback && callback());
-    createCount++;
-    createState(STATE_PATH + 'Off', {'name':'Turn Receiver Off', 'type':'boolean', 'read':false, 'write':true, 'role':'button', 'def':false }, () => !--createCount && callback && callback());
+    createState(STATE_PATH + 'Toggle On Off',  {'name':'Turn Receiver OnOff',  'type':'boolean', 'read':false, 'write':true, 'role':'button', 'def':false }, () => !--createCount && callback && callback());
+   // createCount++;
+   // createState(STATE_PATH + 'Off', {'name':'Turn Receiver Off', 'type':'boolean'});//, 'read':false, 'write':true, 'role':'button', 'def':false }, () => !--createCount && callback && callback());
 
     createCount++;
-    createState(STATE_PATH + 'Power State',  {'name':'PowerStatus',  'type':'boolean', 'read':false, 'write':false, 'role':'state', 'def':false }, () => !--createCount && callback && callback());
+    createState(STATE_PATH + 'Power State',  {'name':'PowerStatus',  'type':'boolean'});//, 'read':false, 'write':false, 'role':'state', 'def':false }, () => !--createCount && callback && callback());
 
+    createCount++;
+    createState(STATE_PATH + 'Type', undefined, true, {'name':'Receiver Type'});//,  'type':'string', 'read':false, 'write':true, 'role':'value', 'def':false });
 
     // listen to Changes
     ////////////////////////////////////////////////////////
@@ -163,16 +166,18 @@ function init() {
     });
  
     // TechniStar on/off buttons
-    on({id: STATE_PATH + 'TvOn', val: true, ack: false}, function (obj) {
+    on({id: STATE_PATH + 'Toggle On Off', val: true, ack: false}, function (obj) {
         //powerPhilipsTv(true);
-    });
-    on({id: STATE_PATH + 'TvOff', val: true, ack: false}, function (obj) {
-        powerPhilipsTv(false);
+        sendMessage("Standby");
     });
  
     // Get Device Information
     ////////////////////////////////////////////////////////
     sendMessage(ts_deviceInformationRequest);
+
+    // Discover Device(s)
+    ////////////////////////////////////////////////////////
+    sendMessage(ts_deviceDiscoveryRequest);
 
     // set Event Listeners for UDP-Socket ...
     ////////////////////////////////////////////////////////
@@ -193,12 +198,28 @@ function init() {
 
         if (message.indexOf("deviceInformationResponse") > 0) {
             // Message Received Device Information ...
+            // <deviceInformationResponse name="TechniStar S3 ISIO" softwareVer="2.57.0.4 (2575i)" protocolVer="1.5" hardwareVer="47.2" serial="0008c92e481028f4"><capabilities><type>STB</type><rcu/><keyboard/><mouse/></capabilities></deviceInformationResponse>
 
-        } else if message.indexOf("authenticationResponse") >0 ) {
+        } else if (message.indexOf("authenticationResponse") > 0 ) {
             // Answer: Authentication
+            // <authenticationResponse result="SUCCESS" />
+            var msg = message.toString().match(/result="(.*?)"/i);
+            tsAUTH = msg[1];
+            if (tsLOG == true)
+              console.log("Authentication: " + msg[1]);
 
-        } else if {
+        } else if (message.indexOf("deviceDiscoveryResponse") > 0 ) {
+            // Answer: DeviceInformation
+            // <deviceDiscoveryResponse name="TechniStar S3 ISIO" type="STB" serial="0008c92e481028f4"/>
+            var msg = message.toString().match(/name="(.*?)"/i);
+            setState(STATE_PATH + "Type", msg[1], true);
+            if (tsLOG == true)
+              console.log("ReceiverType: " + msg[1]);    
+
+        } 
+        else {
             // everything else
+
         }
     });
 
@@ -217,12 +238,17 @@ function init() {
 
 function sendMessage(message) {
   var msg = "";
+  
   if (message.length <= 4)
-    msg = "<rcuButtonRequest code='"+ message +"' state='pressed' />";
+    msg = "<rcuButtonRequest code='"+ message +"' state='pressed'/>";
   else 
     msg = message;
+
   net.send(message, 0, message.length, tsPORT, tsHOST, function () {
+    if (tsLOG == true)
       console.log("Nachricht [[" + msg + "]] abgesetzt");
+    if (message.length <= 4)
+      sendMessage("<rcuButtonRequest code='"+ message +"' state='released'/>");
   });
 }
 
