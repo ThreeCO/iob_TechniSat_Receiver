@@ -1,6 +1,6 @@
 //// CONFIGURATION 
 ///////////////////////////////////////////////////////
-const STATE_PATH = "javascript.0.TechniStar.";
+const STATE_PATH = "javascript.0.TechniSat.";
 const tsHOST="127.0.0.1";
 const tsPORT=8090;
 const tsPIN=0000;
@@ -74,56 +74,6 @@ pCommands['Rewind']             = [inc++];
 pCommands['Stop']               = [inc++]; // 50
 pCommands['Play Pause']         = [inc++]; 
 pCommands['Wind']               = [inc++];
-//pCommands['']         = [inc++];
-//pCommands['']         = [inc++];
-//pCommands['']         = [inc++]; // 55
-//pCommands['']         = [inc++]; 
-//pCommands['']         = [inc++];
-//pCommands['']         = [inc++];
-//pCommands['']         = [inc++];
-//pCommands['']         = [inc++]; // 60
-
-//      (Code:   53; Name: 'BTN_CODESAT1';   Description: 'CODE SAT1'),
-//      (Code:   54; Name: 'BTN_CODESAT2';   Description: 'CODE SAT2'),
-//      (Code:   55; Name: 'BTN_CODETV1';    Description: 'CODE TV1'),
-//      (Code:   56; Name: 'BTN_CODETV2';    Description: 'CODE TV2'),
-//      (Code:   57; Name: 'BTN_CODEVCR1';   Description: 'CODE VCR1'),
-//      (Code:   58; Name: 'BTN_CODEVCR2';   Description: 'CODE VCR2'),
-//      (Code:   59; Name: 'BTN_FREESATBACK';Description: 'FREESAT BACK'),
-//      (Code:   60; Name: 'BTN_AD';         Description: 'AD'),
-//      (Code:   61; Name: 'BTN_SUBTITLE';   Description: 'SUBTITLE'),
-//      (Code:   62; Name: 'BTN_NAV';        Description: 'NAVIGATION'),
-//      (Code:   63; Name: 'BTN_PAGEUP';     Description: 'PAGE UP'),
-//      (Code:   64; Name: 'BTN_PAGEDOWN';   Description: 'PAGE DOWN'),
-//      (Code:   65; Name: 'BTN_PVR';        Description: 'PVR'),
-//      (Code:   66; Name: 'BTN_WWW';        Description: 'WWW'),
-//      (Code:   67; Name: 'BTN_TIMER';      Description: 'TIMER'),
-//      (Code:   68; Name: 'BTN_NOTUSED68';  Description: 'BUTTON 68 NOT USED'),
-//      (Code:  105; Name: 'BTN_NOTUSED105';  Description: 'BUTTON 105 NOT USED'),
-//      (Code:  106; Name: 'BTN_KBDF1';       Description: 'KEYBOARD F1'),
-//      (Code:  107; Name: 'BTN_KBDF2';       Description: 'KEYBOARD F2'),
-//      (Code:  108; Name: 'BTN_KBDF3';       Description: 'KEYBOARD F3'),
-//      (Code:  109; Name: 'BTN_KBDF4';       Description: 'KEYBOARD F4'),
-//      (Code:  110; Name: 'BTN_KBDF5';       Description: 'KEYBOARD F5'),
-//      (Code:  111; Name: 'BTN_KBDF6';       Description: 'KEYBOARD F6'),
-//      (Code:  112; Name: 'BTN_KBDF7';       Description: 'KEYBOARD F7'),
-//      (Code:  113; Name: 'BTN_KBDF8';       Description: 'KEYBOARD F8'),
-//      (Code:  114; Name: 'BTN_KBDF9';       Description: 'KEYBOARD F9'),
-//      (Code:  115; Name: 'BTN_KBDF10';      Description: 'KEYBOARD F10'),
-//      (Code:  116; Name: 'BTN_KBDF11';      Description: 'KEYBOARD F11'),
-//      (Code:  117; Name: 'BTN_KBDF12';      Description: 'KEYBOARD F12'),
-//      (Code:  118; Name: 'BTN_SOFTKEY1';    Description: 'SOFTKEY 1'),
-//      (Code:  119; Name: 'BTN_SOFTKEY2';    Description: 'SOFTKEY 2'),
-//      (Code:  120; Name: 'BTN_SOFTKEY3';    Description: 'SOFTKEY 3'),
-//      (Code:  121; Name: 'BTN_SOFTKEY4';    Description: 'SOFTKEY 4'),
-//      (Code:  122; Name: 'BTN_KBDINFO';     Description: 'KEYBOARD INFO'),
-//      (Code:  123; Name: 'BTN_KBDDOWN';     Description: 'KEYBOARD DOWN'),
-//      (Code:  124; Name: 'BTN_KBDUP';       Description: 'KEYBOARD UP'),
-//      (Code:  125; Name: 'BTN_KBDMODE';     Description: 'KEYBOARD MODE'),
-//      (Code:  126; Name: 'BTN_DOFLASH';     Description: 'DO FLASH RESET'),
-//      (Code:  127; Name: 'BTN_NOTDEFINED';  Description: 'BUTTON NOT DEFINED'),
-//      (Code:  128; Name: 'BTN_INVALID';     Description: 'BUTTON INVALID')
-
 
 init();
 
